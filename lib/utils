@@ -62,7 +62,7 @@ install_java() {
   if [ ! -f "${cache_dir}/.jdk/bin/java" ] || [ "${jdk_ver}" != "$(java_version ${cache_dir}/.jdk/bin/)" ] ; then
     echo -n " (downloading...)"
     rm -rf "${cache_dir}/.jdk" && mkdir -p "${cache_dir}/.jdk"
-    curl -L -b "Cookie: oraclelicense=a" "${jdk_url}" | tar xz -C "${cache_dir}/.jdk" --strip-components=1
+    curl -L -b "oraclelicense=a" "${jdk_url}" | tar xz -C "${cache_dir}/.jdk" --strip-components=1
     rm -rf "${cache_dir}/.jdk/src.zip" "${cache_dir}/.jdk/javafx-src.zip" "${cache_dir}/.jdk/db" "${cache_dir}/.jdk/man"
   fi
   cp -r "${cache_dir}/.jdk/." "${build_dir}/.jdk"
