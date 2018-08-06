@@ -51,8 +51,8 @@ java_version() {
 install_java() {
   cache_dir=$1
   build_dir=$2  
-  jdk_url=${3:-"http://download.oracle.com/otn-pub/java/jdk/8u111-b14/jdk-8u111-linux-x64.tar.gz"}
-  jdk_ver=${4:-"1.8.0_111"}
+  jdk_url=${3:-"http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jre-8u131-linux-x64.tar.gz"}
+  jdk_ver=${4:-"1.8.0_131"}
   
   if [ ! -d "${cache_dir}" ]; then error "Invalid cache directory to store JDK."; fi
   if [ ! -d "${build_dir}" ]; then error "Invalid slug directory to install JDK."; fi
@@ -62,7 +62,7 @@ install_java() {
   if [ ! -f "${cache_dir}/.jdk/bin/java" ] || [ "${jdk_ver}" != "$(java_version ${cache_dir}/.jdk/bin/)" ] ; then
     echo -n " (downloading...)"
     rm -rf "${cache_dir}/.jdk" && mkdir -p "${cache_dir}/.jdk"
-    curl -s -j -k -L -H "Cookie: oraclelicense=accept-securebackup-cookie" "${jdk_url}" | tar xz -C "${cache_dir}/.jdk" --strip-components=1
+    curl -L -b "Cookie: oraclelicense=accept-securebackup-cookie" "${jdk_url}" | tar xz -C "${cache_dir}/.jdk" --strip-components=1
     rm -rf "${cache_dir}/.jdk/src.zip" "${cache_dir}/.jdk/javafx-src.zip" "${cache_dir}/.jdk/db" "${cache_dir}/.jdk/man"
   fi
   cp -r "${cache_dir}/.jdk/." "${build_dir}/.jdk"
